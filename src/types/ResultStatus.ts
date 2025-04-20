@@ -1,0 +1,5 @@
+export enum ResultStatus {
+	OK = 'OK',
+	INVALID_REQUEST = 'INVALID_REQUEST',
+	INTERNAL_ERROR = 'INTERNAL_ERROR',
+}
