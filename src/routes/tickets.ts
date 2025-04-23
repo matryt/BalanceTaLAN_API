@@ -20,7 +20,7 @@ router.get('/all', async (req: Request, res: Response) => {
 	if (!tickets) {
 		return badRequestResponse(res, 'Failed to get tickets');
 	}
-	okResponseWithData<TicketDTO[]>(res, tickets || []);
+	okResponseWithData<TicketDTO>(res, tickets);
 });
 
 router.post('', upload.array('photos'), async (req: Request, res: Response) => {
@@ -29,12 +29,12 @@ router.post('', upload.array('photos'), async (req: Request, res: Response) => {
 
 
 	if (!body) {
-		return badRequestResponse(res, 'Invalid data');
+		return badRequestResponse(res, 'Invalid data', true);
 	}
 
 	if (!body.firstName || !body.lastName || !body.placeAndArea || !body.category ||
 		!body.photos || !body.title) {
-		return badRequestResponse(res, 'Missing required fields');
+		return badRequestResponse(res, 'Missing required fields', true);
 	}
 
 	const result = await addTicket(body.firstName, body.lastName, body.placeAndArea, body.category,
@@ -42,7 +42,7 @@ router.post('', upload.array('photos'), async (req: Request, res: Response) => {
 	if (result == ResultStatus.OK) {
 		createdResponse(res);
 	} else if (result == ResultStatus.INVALID_REQUEST) {
-		badRequestResponse(res, 'Invalid request');
+		badRequestResponse(res, 'Invalid request', true);
 	}
 	else {
 		internalServerErrorResponse(res, 'Failed to add ticket');
@@ -56,7 +56,7 @@ router.get('/:ticketId', async (req, res) => {
 	if (!ticket) {
 		return badRequestResponse(res, 'Failed to get ticket');
 	}
-	okResponseWithData<TicketDTO>(res, ticket);
+	okResponseWithData<TicketDTO>(res, [ticket]);
 });
 
 export default router;

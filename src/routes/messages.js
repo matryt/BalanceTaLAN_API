@@ -34,23 +34,23 @@ router.get('/:messageId', (req, res) => __awaiter(void 0, void 0, void 0, functi
     if (!ticket) {
         return (0, responseHandler_1.badRequestResponse)(res, 'Failed to get message');
     }
-    (0, responseHandler_1.okResponseWithData)(res, ticket);
+    (0, responseHandler_1.okResponseWithData)(res, [ticket]);
 }));
 router.post('', upload.array('photos'), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const body = req.body;
     body.photos = (0, extractFiles_1.extractFiles)(req) || [];
     if (!body) {
-        return (0, responseHandler_1.badRequestResponse)(res, 'Invalid data');
+        return (0, responseHandler_1.badRequestResponse)(res, 'Invalid data', true);
     }
     if (!body.firstName || !body.lastName || !body.photos || !body.content) {
-        return (0, responseHandler_1.badRequestResponse)(res, 'Missing required fields');
+        return (0, responseHandler_1.badRequestResponse)(res, 'Missing required fields', true);
     }
     const result = yield (0, messages_1.addMessage)(body.ticketId, body.content, body.firstName, body.lastName, body.photos);
     if (result == ResultStatus_1.ResultStatus.INTERNAL_ERROR) {
         (0, responseHandler_1.internalServerErrorResponse)(res, 'Failed to add message');
     }
     else if (result == ResultStatus_1.ResultStatus.INVALID_REQUEST) {
-        (0, responseHandler_1.badRequestResponse)(res, 'Invalid response');
+        (0, responseHandler_1.badRequestResponse)(res, 'Invalid response', true);
     }
     else {
         (0, responseHandler_1.createdResponse)(res);

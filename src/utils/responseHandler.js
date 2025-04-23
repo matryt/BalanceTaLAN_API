@@ -9,12 +9,7 @@ const okPhotoResponse = (res, photo) => {
 };
 exports.okPhotoResponse = okPhotoResponse;
 const okResponseWithData = (res, data) => {
-    const response = {
-        success: true,
-        message: 'OK',
-        data: data,
-    };
-    res.status(200).json(response);
+    res.status(200).json(data);
 };
 exports.okResponseWithData = okResponseWithData;
 const createdResponse = (res) => {
@@ -26,12 +21,18 @@ const createdResponse = (res) => {
     res.status(201).json(response);
 };
 exports.createdResponse = createdResponse;
-const badRequestResponse = (res, message) => {
-    const response = {
-        success: false,
-        message: message,
-        data: null,
-    };
+const badRequestResponse = (res, message, completeResponse = false) => {
+    let response;
+    if (completeResponse) {
+        response = {
+            success: false,
+            message: message,
+            data: null,
+        };
+    }
+    else {
+        response = [];
+    }
     res.status(400).json(response);
 };
 exports.badRequestResponse = badRequestResponse;

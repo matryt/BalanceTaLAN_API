@@ -25,24 +25,24 @@ router.get('/all', (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     if (!tickets) {
         return (0, responseHandler_1.badRequestResponse)(res, 'Failed to get tickets');
     }
-    (0, responseHandler_1.okResponseWithData)(res, tickets || []);
+    (0, responseHandler_1.okResponseWithData)(res, tickets);
 }));
 router.post('', upload.array('photos'), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const body = req.body;
     body.photos = (0, extractFiles_1.extractFiles)(req) || [];
     if (!body) {
-        return (0, responseHandler_1.badRequestResponse)(res, 'Invalid data');
+        return (0, responseHandler_1.badRequestResponse)(res, 'Invalid data', true);
     }
     if (!body.firstName || !body.lastName || !body.placeAndArea || !body.category ||
         !body.photos || !body.title) {
-        return (0, responseHandler_1.badRequestResponse)(res, 'Missing required fields');
+        return (0, responseHandler_1.badRequestResponse)(res, 'Missing required fields', true);
     }
     const result = yield (0, tickets_1.addTicket)(body.firstName, body.lastName, body.placeAndArea, body.category, body.photos, body.title, body.description);
     if (result == ResultStatus_1.ResultStatus.OK) {
         (0, responseHandler_1.createdResponse)(res);
     }
     else if (result == ResultStatus_1.ResultStatus.INVALID_REQUEST) {
-        (0, responseHandler_1.badRequestResponse)(res, 'Invalid request');
+        (0, responseHandler_1.badRequestResponse)(res, 'Invalid request', true);
     }
     else {
         (0, responseHandler_1.internalServerErrorResponse)(res, 'Failed to add ticket');
@@ -54,6 +54,6 @@ router.get('/:ticketId', (req, res) => __awaiter(void 0, void 0, void 0, functio
     if (!ticket) {
         return (0, responseHandler_1.badRequestResponse)(res, 'Failed to get ticket');
     }
-    (0, responseHandler_1.okResponseWithData)(res, ticket);
+    (0, responseHandler_1.okResponseWithData)(res, [ticket]);
 }));
 exports.default = router;

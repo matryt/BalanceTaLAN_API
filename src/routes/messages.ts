@@ -29,7 +29,7 @@ router.get('/:messageId', async (req, res) => {
 	if (!ticket) {
 		return badRequestResponse(res, 'Failed to get message');
 	}
-	okResponseWithData<MessageDTO>(res, ticket);
+	okResponseWithData<MessageDTO>(res, [ticket]);
 });
 
 router.post('', upload.array('photos'), async (req: Request, res: Response) => {
@@ -38,11 +38,11 @@ router.post('', upload.array('photos'), async (req: Request, res: Response) => {
 	body.photos = extractFiles(req) || [];
 
 	if (!body) {
-		return badRequestResponse(res, 'Invalid data');
+		return badRequestResponse(res, 'Invalid data', true);
 	}
 
 	if (!body.firstName || !body.lastName || !body.photos || !body.content) {
-		return badRequestResponse(res, 'Missing required fields');
+		return badRequestResponse(res, 'Missing required fields', true);
 	}
 
 	const result = await addMessage(body.ticketId, body.content, body.firstName, body.lastName,
@@ -50,7 +50,7 @@ router.post('', upload.array('photos'), async (req: Request, res: Response) => {
 	if (result == ResultStatus.INTERNAL_ERROR) {
 		internalServerErrorResponse(res, 'Failed to add message');
 	} else if (result == ResultStatus.INVALID_REQUEST) {
-		badRequestResponse(res, 'Invalid response');
+		badRequestResponse(res, 'Invalid response', true);
 	}
 	else {
 		createdResponse(res);
