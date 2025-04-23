@@ -133,9 +133,7 @@ function transformTicket(ticket: Prisma.ProblemGetPayload<{include: {Person: tru
 		category: ticket.ProblemCategory?.name || "",
 		title: ticket.title || "",
 		messages: ticket.Message.map(message => {
-			return {
-				id: message.id,
-			};
+			return message.id;
 		})
 	}
 }

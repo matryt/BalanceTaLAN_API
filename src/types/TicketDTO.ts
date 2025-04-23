@@ -5,7 +5,5 @@ export interface TicketDTO {
     lastName: string;
     place: string;
     category: string;
-    messages: {
-        id: number,
-    }[]
+    messages: number[]
 }

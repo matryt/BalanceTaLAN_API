@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.notFoundResponse = exports.internalServerErrorResponse = exports.badRequestResponse = exports.createdResponse = exports.okResponseWithData = exports.okPhotoResponse = void 0;
+exports.internalServerErrorResponse = exports.badRequestResponse = exports.createdResponse = exports.okResponseWithData = exports.okPhotoResponse = void 0;
 const okPhotoResponse = (res, photo) => {
     res.setHeader('Content-Type', 'image/jpeg');
     res.setHeader('Content-Length', photo.length || 0);
@@ -32,6 +32,7 @@ const badRequestResponse = (res, message, completeResponse = false) => {
     }
     else {
         response = [];
+        console.error(message);
     }
     res.status(400).json(response);
 };
@@ -45,12 +46,3 @@ const internalServerErrorResponse = (res, message) => {
     res.status(500).json(response);
 };
 exports.internalServerErrorResponse = internalServerErrorResponse;
-const notFoundResponse = (res, message) => {
-    const response = {
-        success: false,
-        message: message,
-        data: null,
-    };
-    res.status(404).json(response);
-};
-exports.notFoundResponse = notFoundResponse;

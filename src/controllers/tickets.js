@@ -138,9 +138,7 @@ function transformTicket(ticket) {
         category: ((_f = ticket.ProblemCategory) === null || _f === void 0 ? void 0 : _f.name) || "",
         title: ticket.title || "",
         messages: ticket.Message.map(message => {
-            return {
-                id: message.id,
-            };
+            return message.id;
         })
     };
 }
