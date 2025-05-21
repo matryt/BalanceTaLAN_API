@@ -1,5 +1,4 @@
 import {TicketDTO} from "../types/TicketDTO";
-import { Response } from 'express';
 import {Prisma, PrismaClient} from "../generated/prisma";
 import {ResultStatus} from "../types/ResultStatus";
 

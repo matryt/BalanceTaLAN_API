@@ -10,6 +10,7 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const morgan_1 = __importDefault(require("morgan"));
 const tickets_1 = __importDefault(require("./routes/tickets"));
 const messages_1 = __importDefault(require("./routes/messages"));
+const areas_1 = __importDefault(require("./routes/areas"));
 const app = (0, express_1.default)();
 app.set('views', path_1.default.resolve('views'));
 app.set('view engine', 'pug');
@@ -20,6 +21,7 @@ app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.static(path_1.default.resolve('public')));
 app.use('/tickets', tickets_1.default);
 app.use('/messages', messages_1.default);
+app.use('/areas', areas_1.default);
 app.use((req, res, next) => {
     next((0, http_errors_1.default)(404));
 });
