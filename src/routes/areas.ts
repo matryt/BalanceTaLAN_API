@@ -1,7 +1,5 @@
 import express from "express";
-import multer from "multer";
-import {getPhoto} from "../controllers/messages";
-import {badRequestResponse, okPhotoResponse, okResponseWithData} from "../utils/responseHandler";
+import {badRequestResponse, okResponseWithData} from "../utils/responseHandler";
 import {getAreas} from "../controllers/areas";
 
 const router = express.Router();

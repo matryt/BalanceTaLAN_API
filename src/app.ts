@@ -7,6 +7,7 @@ import logger from 'morgan';
 import ticketsRouter from './routes/tickets';
 import messagesRouter from './routes/messages';
 import areasRouter from './routes/areas';
+import statsRouter from './routes/stats';
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(express.static(path.resolve('public')));
 app.use('/tickets', ticketsRouter);
 app.use('/messages', messagesRouter);
 app.use('/areas', areasRouter);
+app.use('/stats', statsRouter);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   next(createError(404));

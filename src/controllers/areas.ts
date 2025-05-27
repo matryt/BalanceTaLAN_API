@@ -1,6 +1,4 @@
-import {Response} from "express";
-import {Area, PrismaClient} from "../generated/prisma";
-import {ResultStatus} from "../types/ResultStatus";
+import {PrismaClient} from "../generated/prisma";
 import {AreaDTO} from "../types/AreaDTO";
 import {PlaceDTO} from "../types/PlaceDTO";
 
